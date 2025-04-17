@@ -1,26 +1,23 @@
-function prequire(f)
-  local s,e=pcall(function()require(f)end)
-  if not s then
-    if type(e)=="string" then
-      print(f..":"..e)
-    else
-      print(f..": can't load "..modname.."/"..string.gsub(f, "%.", "/")..".lua")
-    end
-  end
+
+local function setSpawnItems()
+	if remote.interfaces.freeplay and remote.interfaces.freeplay.get_created_items and remote.interfaces.freeplay.set_created_items then
+		local tb = {}
+		 tb = remote.call("freeplay", "get_created_items")
+		 tb["burner-assembling-machine"] = 1
+		 remote.call("freeplay", "set_created_items", tb)
+	end
 end
 
-prequire "defines"
+local function setRespawnItems()
+	if remote.interfaces.freeplay and remote.interfaces.freeplay.get_respawn_items and remote.interfaces.freeplay.set_respawn_items then
+		local tb = {}
+		 tb = remote.call("freeplay", "get_respawn_items")
+		 tb["burner-assembling-machine"] = 1
+		 remote.call("freeplay", "set_respawn_items", tb)
+	end
+end
 
-script.on_init(function()
-  pcall(function()
-    for _, player in pairs(game.players) do
-      player.insert{name = "burner-assembling-machine", count = 1}
-    end
-  end)
-end)
-
-script.on_event(defines.events.on_player_created, function(event)
-  pcall(function()
-    game.players[event.player_index].insert{name="burner-assembling-machine", count=1}
-  end)
+script.on_event(defines.events.on_game_created_from_scenario, function(event)
+	setSpawnItems()
+	setRespawnItems()
 end)
