@@ -42,8 +42,8 @@ data:extend({
     type = "recipe",
     name = "burner-assembling-machine",
     ingredients = {
-      { type = "item", name = "stone-furnace",   amount = 1 },
-      { type = "item", name = "iron-gear-wheel", amount = 5 }
+      { type = "item", name = "stone",   amount = 5 },
+      { type = "item", name = "iron-ore", amount = 10 }
     },
     results = {
       { type = "item", name = "burner-assembling-machine", amount = 1 }
